@@ -131,7 +131,11 @@ public:
 
     // Prints all of the elements of the list
     void displayAll() {
-        // Loop to go through list printing each value
+        node* temp = head;
+        while (temp != NULL) {
+            std::cout << temp->data + " ";
+        }
+        std::cout << endl;
     }
 
     // Returns the number of elements in the list
