@@ -61,13 +61,33 @@ public:
 
     // Remove the back item
     void popBack() {
-        
+        if (head == NULL) {
+            return NULL;
+        }
+        if (head->next == NULL) {
+            delete head;
+            return NULL;
+        }
+
+        node* temp = head;
+        while (temp->next->next != NULL) {
+            temp = temp->next;
+        }
+        delete temp->next;
     }
 
     // Searching the list to see if a given key is in the list
     bool find(int key) {
-        // Loop through and check if there is a value matches the key
+        // Iterate through until finding the position it's looking for
+        node* findKey = head;
+        // Looping, looking for a given 
+        do {
+            if (findKey->data = key) {
+                return true;
+            }
 
+        } while (findKey->data != key);
+        return false;
     }
 
     // Checking to see if the list is empty
@@ -117,8 +137,13 @@ public:
     // Returns the number of elements in the list
     int size() {
         int count = 0;
+        node* temp = new node;
+        temp = head;
         // Loop to go through list starting at head
-
+        while (temp != NULL) {
+            count++;
+            temp = temp->next;
+        }
         return count;
     }
 
