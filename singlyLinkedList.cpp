@@ -15,7 +15,8 @@ struct node {
 class linkedList {
 private:
     // Pointer to the head and tail of the list
-    node* head, * tail;
+    node* head;
+    node* tail;
 
 public:
     // Constructor
@@ -47,7 +48,7 @@ public:
     // Remove the front item
     void popFront() {
         if (head == NULL && tail == NULL) {
-            return NULL;
+            return;
         }
         node* temp = new node;
         temp = head;
@@ -65,7 +66,7 @@ public:
             tail = temp;
         }
         else {
-            
+
             tail->next = temp;
             tail = temp;
         }
@@ -79,31 +80,35 @@ public:
     // Remove the back item
     void popBack() {
         if (head == NULL) {
-            return NULL;
+            return;
         }
         if (head->next == NULL) {
             delete head;
-            return NULL;
+            return;
         }
 
         node* temp = head;
-        while (temp->next->next != NULL) {
+        while (temp->next != tail) {
             temp = temp->next;
         }
         delete temp->next;
+        tail = temp;
     }
 
     // Searching the list to see if a given key is in the list
-    bool find(int key) {
+    bool findKey(int key) {
         // Iterate through until finding the position it's looking for
         node* findKey = head;
         // Looping, looking for a given 
-        do {
-            if (findKey->data = key) {
+        node* temp = head;
+        int i = 0;
+        while (i < this->size()) {
+            if (temp->data == key) {
                 return true;
             }
-
-        } while (findKey->data != key);
+            temp = temp->next;
+            i++;
+        }
         return false;
     }
 
@@ -118,47 +123,57 @@ public:
     }
 
     // Adds a key before a given node
-    void addBefore(node* givenNode, int key) {
-        if (head == NULL && tail == NULL) {
-            return NULL;
+    void addBefore(int pos, int key) {
+        node* newNode = new node;
+        newNode->data = key;
+        newNode->next = NULL;
+        if (pos < 1) {
+            return;
         }
-        // Base case of front of list
-        if (head == givenNode) {
-            node* temp = new node;
-            temp->data = key;
-            temp->next = head;
+        else if (pos == 1) {
+            newNode->next = head;
+            head = newNode;
         }
         else {
-            // Iterate through until finding the position it's looking for
-            node* beforeNew, findGiven = head;
-            // Looping, looking for a given 
-            for (findGiven, beforeNew; findGiven != givenNode; beforeNew = findGiven, findGiven = findGiven->next);
-
-            node* temp = new node;
-            temp->data = key;
-            temp->next = beforeNew->next;
-            beforeNew->next = temp;
+            node* temp = head;
+            for (int i = 0; i < pos - 1; i++) {
+                if (temp != NULL) {
+                    temp = temp->next;
+                }
+            }
+            if (temp != NULL) {
+                newNode->next = temp->next;
+                temp->next = newNode;
+            }
         }
     }
 
     // Adds a key after a given node
-    void addAfter(node* _node, int key) {
+    void addAfter(int pos, int key) {
         if (head == NULL && tail == NULL) {
-            return NULL;
+            return;
         }
-        node* temp = new node;
-        temp->data = key;
-        temp->next = _node->next;
-        _node->next = temp;
+        node* temp = head;
+        int i = 0;
+        while (i != pos) {
+            temp = temp->next;
+            i++;
+        }
+        node* after = new node;
+        after->data = key;
+        after->next = temp->next;
+        temp->next = after;
     }
 
     // Prints all of the elements of the list
     void displayAll() {
         node* temp = head;
-        while (temp != NULL) {
-            std::cout << temp->data + " ";
+        while (temp != tail) {
+            std::cout << temp->data << " ";
+            temp = temp->next;
         }
-        std::cout << endl;
+        std::cout << temp->data << " ";
+        std::cout << std::endl;
     }
 
     // Returns the number of elements in the list
@@ -177,13 +192,17 @@ public:
     // Overwrites the data in a node with a given key
     void replaceKey(int pos, int key) {
         if (head == NULL && tail == NULL) {
-            return NULL;
+            return;
         }
-        node* current = new node;
-        node* previous = new node;
-        current = head;
 
-        if (pos < this->size)
-        
+        if (pos < this->size()) {
+            node* temp = head;
+            int i = 0;
+            while (i < pos - 1) {
+                temp = temp->next;
+                i++;
+            }
+            temp->next->data = key;
+        }
     }
 };
