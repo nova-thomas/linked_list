@@ -28,8 +28,15 @@ public:
     void pushFront(int key) {
         node* temp = new node;
         temp->data = key;
-        temp->next = head;
-        head = temp;
+        if (head == NULL && tail == NULL) {
+            head = temp;
+            tail = temp;
+            temp->next = NULL;
+        }
+        else {
+            temp->next = head;
+            head = temp;
+        }
     }
 
     // Return the front item
@@ -39,6 +46,9 @@ public:
 
     // Remove the front item
     void popFront() {
+        if (head == NULL && tail == NULL) {
+            return NULL;
+        }
         node* temp = new node;
         temp = head;
         head = head->next;
@@ -50,8 +60,15 @@ public:
         node* temp = new node;
         temp->data = key;
         temp->next = NULL;
-        tail->next = temp;
-        tail = temp;
+        if (head == NULL && tail == NULL) {
+            head = temp;
+            tail = temp;
+        }
+        else {
+            
+            tail->next = temp;
+            tail = temp;
+        }
     }
 
     // Return the back item
@@ -102,6 +119,9 @@ public:
 
     // Adds a key before a given node
     void addBefore(node* givenNode, int key) {
+        if (head == NULL && tail == NULL) {
+            return NULL;
+        }
         // Base case of front of list
         if (head == givenNode) {
             node* temp = new node;
@@ -123,6 +143,9 @@ public:
 
     // Adds a key after a given node
     void addAfter(node* _node, int key) {
+        if (head == NULL && tail == NULL) {
+            return NULL;
+        }
         node* temp = new node;
         temp->data = key;
         temp->next = _node->next;
@@ -153,6 +176,9 @@ public:
 
     // Overwrites the data in a node with a given key
     void replaceKey(int pos, int key) {
+        if (head == NULL && tail == NULL) {
+            return NULL;
+        }
         node* current = new node;
         node* previous = new node;
         current = head;
