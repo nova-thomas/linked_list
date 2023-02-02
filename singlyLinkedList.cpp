@@ -81,12 +81,28 @@ public:
     }
 
     // Adds a key before a given node
-    void addBefore(int node, int key) {
+    void addBefore(node* givenNode, int key) {
+        // Base case of front of list
+        if (head == givenNode) {
+            node* temp = new node;
+            temp->data = key;
+            temp->next = head;
+        }
+        else {
+            // Iterate through until finding the position it's looking for
+            node* beforeNew, findGiven = head;
+            // Looping, looking for a given 
+            for (findGiven, beforeNew; findGiven != givenNode; beforeNew = findGiven, findGiven = findGiven->next);
 
+            node* temp = new node;
+            temp->data = key;
+            temp->next = beforeNew->next;
+            beforeNew->next = temp;
+        }
     }
 
     // Adds a key after a given node
-    void addAfter(int _node, int key) {
+    void addAfter(node* _node, int key) {
         node* temp = new node;
         temp->data = key;
         temp->next = _node->next;
