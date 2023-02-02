@@ -86,8 +86,11 @@ public:
     }
 
     // Adds a key after a given node
-    void addAfter(int node, int key) {
-
+    void addAfter(int _node, int key) {
+        node* temp = new node;
+        temp->data = key;
+        temp->next = _node->next;
+        _node->next = temp;
     }
 
     // Prints all of the elements of the list
